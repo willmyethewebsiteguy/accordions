@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.001/styles.min.css'
+    cssFile: 'https://assets.codepen.io/3198845/WMAccordionTESTING2.css'
   };
   const defaults = {
     icons: {
@@ -253,11 +253,19 @@
         );
       });
     }
-    
+
     function setIcon() {
       let acc = document.querySelector('.wm-accordion-block'),
-          styles = window.getComputedStyle(acc),
+          fakeAcc = '';
+      if (!acc) {
+        fakeAcc = `<div class="wm-accordion-block fake-acc"></div>`;
+        document.body.insertAdjacentHTML('beforeend', fakeAcc);
+        acc = document.querySelector('.wm-accordion-block');
+      }
+
+      let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
+      if (fakeAcc) acc.remove();
       return {html: defaults.icons[icon], id: icon};
     } 
 
@@ -372,7 +380,6 @@
         acc = document.querySelector('.wm-accordion-block');
       }
       
-      
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
       if (fakeAcc) acc.remove();
@@ -452,8 +459,16 @@
 
     function setIcon() {
       let acc = document.querySelector('.wm-accordion-block'),
-          styles = window.getComputedStyle(acc),
+          fakeAcc = '';
+      if (!acc) {
+        fakeAcc = `<div class="wm-accordion-block fake-acc"></div>`;
+        document.body.insertAdjacentHTML('beforeend', fakeAcc);
+        acc = document.querySelector('.wm-accordion-block');
+      }
+
+      let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
+      if (fakeAcc) acc.remove();
       return {html: defaults.icons[icon], id: icon};
     } 
 
