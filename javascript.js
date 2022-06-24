@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.002/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.003/styles.min.css'
   };
   const defaults = {
     icons: {
@@ -254,19 +254,14 @@
       });
     }
 
-    function setIcon() {
-      let acc = document.querySelector('.wm-accordion-block'),
-          fakeAcc = '';
-      if (!acc) {
-        fakeAcc = `<div class="wm-accordion-block fake-acc"></div>`;
-        document.body.insertAdjacentHTML('beforeend', fakeAcc);
-        acc = document.querySelector('.wm-accordion-block');
-      }
-
+    function setIcon(instance) {
+      let acc = instance.settings.container;
+      
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
-      if (fakeAcc) acc.remove();
-      return {html: defaults.icons[icon], id: icon};
+      return `<div class="icon ${icon}">
+  ${defaults.icons[icon]}
+</div>`;
     } 
 
     let injectTemplate = (instance) => {
@@ -288,9 +283,7 @@
       <div class="accordion-wrapper">
         <button class="accordion-toggle">
           <div class="text">${instance.settings.title}</div>
-          <div class="icon ${setIcon().id}">
-            ${setIcon().html}
-          </div>
+          ${setIcon(instance)}
         </button>
         <div class="accordion-content">
           <div class="accordion-content-wrapper">
@@ -457,19 +450,14 @@
   })();
   let BuildAccordionFromSelector = (function(){
 
-    function setIcon() {
-      let acc = document.querySelector('.wm-accordion-block'),
-          fakeAcc = '';
-      if (!acc) {
-        fakeAcc = `<div class="wm-accordion-block fake-acc"></div>`;
-        document.body.insertAdjacentHTML('beforeend', fakeAcc);
-        acc = document.querySelector('.wm-accordion-block');
-      }
-
+    function setIcon(instance) {
+      let acc = instance.settings.container;
+      
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
-      if (fakeAcc) acc.remove();
-      return {html: defaults.icons[icon], id: icon};
+      return `<div class="icon ${icon}">
+  ${defaults.icons[icon]}
+</div>`;
     } 
 
     let injectTemplate = (instance) => {
@@ -481,9 +469,7 @@
       <div class="accordion-wrapper">
         <button class="accordion-toggle">
           <div class="text">${instance.settings.title}</div>
-          <div class="icon ${setIcon().id}">
-            ${setIcon().html}
-          </div>
+          ${setIcon(instance)}
         </button>
         <div class="accordion-content">
           <div class="accordion-content-wrapper">
