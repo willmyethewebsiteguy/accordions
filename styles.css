@@ -1,0 +1,231 @@
+/** Version 3.0
+ * Accordion Dropdown Plugins for Squarespace 
+ * Copyright Will Myers 
+**/
+.wm-accordion-block{ 
+  --accordion-spacing: 0px;
+  --content-padding-h: 0px;
+  --content-padding-v: 17px;
+  --icon-type: plus;
+
+  --accordion-shadow:var(--light);
+  --accordion-border-radius: 0px;
+  --accordion-background: none;
+  --accordion-border:;
+  --accordion-border-top: none;
+  --accordion-border-bottom: 1px solid currentColor;
+  --accordion-border-left: none;
+  --accordion-border-right: none;
+
+  --button-padding-v: 17px;
+  --button-padding-h: 17px;
+  --button-color: currentColor;
+  --button-background: transparent;
+  --button-opacity: 1;
+  --button-border: none;
+  --button-text-align: start;
+  
+  --hover-button-color: currentColor;
+  --hover-button-opacity: 0.6;
+  --hover-button-background: transparent;
+  
+  --active-button-color: currentColor;
+  --active-button-opacity: 1;
+  --active-button-background: transparent;
+  
+  --icon-size: 15px;
+  --icon-thickness: 4px;
+  --icon-color: currentColor;
+  
+  --content-background: transparent; 
+  
+  --product-accordions-container-margin: 17px;
+
+  --light:
+    0.4px 0.4px 1px hsla(0,0%,0%, 0.25),
+    1.5px 1.4px 1.9px -3.9px hsla(0,0%,0%, 0.19);
+  --medium:
+    0.4px 0.4px 1px hsla(0,0%,0%, 0.33),
+    9.6px 8.8px 7.8px -4px hsla(0,0%,0%, 0.24);
+  --heavy: 
+    0.4px 0.4px 0.5px hsla(0,0%,0%, 0.33),
+    9.6px 8.8px 11.8px -2px hsla(0,0%,0%, 0.24),
+    25.5px 23.6px 31.5px -3px hsla(0,0%,0%, 0.19);
+}
+
+.wm-accordion-block {
+  margin:var(--accordion-spacing) 0px !important;
+  border: var(--accordion-border);
+  border-radius: var(--accordion-border-radius);
+  border-top: var(--accordion-border-top);
+  border-right: var(--accordion-border-right);
+  border-bottom: var(--accordion-border-bottom);
+  border-left: var(--accordion-border-left);
+  box-shadow: var(--accordion-shadow);
+}
+.contains-wm-accordion{
+  padding:0px 17px !important;
+}
+.fe-block .contains-wm-accordion{
+  padding: 0px 0px !important;
+}
+
+.wm-accordion-block button.accordion-toggle{
+  width: 100%;
+  background: var(--button-background);
+  padding: var(--button-padding-v)  var(--button-padding-h);
+  border: var(--button-border);
+  color: var(--button-color);
+  display: flex;
+  align-items: center;
+  text-align: var(--button-text-align);
+  gap: 8px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.wm-accordion-block button.accordion-toggle:hover{
+  background: var(--hover-button-background);
+  opacity: var(--hover-button-opacity);
+  color: var(--hover-button-color);
+}
+.wm-accordion-block.open button.accordion-toggle{
+  background: var(--active-button-background);
+  opacity: var(--active-button-opacity);
+  color: var(--active-button-color);
+}
+.wm-accordion-block button.accordion-toggle .text *{
+  margin:0;
+}
+.wm-accordion-block button > .icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+.wm-accordion-block button > .icon svg,
+.wm-accordion-block button > .icon path{
+  stroke:var(--icon-color, var(--button-color));
+  stroke-width: var(--icon-thickness);
+}
+
+.wm-accordion-block button.icon-reverse {
+  flex-direction:row-reverse;
+  justify-content: flex-end;
+}
+
+.wm-accordion-block .accordion-content {
+  box-sizing:border-box;
+  height:0px;
+  background:var(--content-background);
+  transition: height .5s ease, 
+    visibility 0s linear .5s;
+  overflow:hidden;
+  visibility:hidden;
+}
+
+.wm-accordion-block.open .accordion-content {
+  transition: height .5s ease, 
+    visibility 0s linear 0s;
+  visibility:visible;
+}
+
+@media(min-width:767px){
+  .wm-accordion-block .accordion-content-wrapper {
+    padding: var(--content-padding-v) var(--content-padding-h);
+  }
+}
+
+/*Targeting Sections Adjustings*/
+.wm-accordion-block .accordion-content section.page-section{
+  padding: 0px !important;
+  min-height: unset !important;
+}
+.wm-accordion-block .accordion-content .content-wrapper {
+  padding: 0px !important;
+}
+body:not(.sqs-edit-mode-active) .hide-section {
+  display:none !important;
+}
+
+/*Collection Adjustments*/
+.wm-accordion-block .sqs-layout > .sqs-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.wm-accordion-block .fluid-engine {
+  padding:17px;
+}
+/*If Normal Blocks within a Fluid Section*/
+.fluid-engine .wm-accordion-block .sqs-layout .sqs-block {
+  box-sizing:border-box;
+}
+
+/*Product Page Container */
+.ProductItem-details-accordion .wm-accordion-block:last-child{
+  margin-bottom: var(--product-accordions-container-margin) !important;
+}
+
+/*Angled Bracket*/
+@supports (d: path('M4 16 l28 26 L60 16')) {
+  .wm-accordion-block button > .icon.angle path {
+    d: path('M4 16 l28 26 L60 16');
+    transition: d .6s ease-in-out;
+  }
+  .wm-accordion-block.open button > .icon.angle path {
+    d: path('M4 42 l28 -26 L60 42');
+  }
+}
+@supports not (d: path('M4 16 l28 26 L60 16')) {
+  .wm-accordion-block button > .icon.angle path {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    will-change:transform;
+    transition: transform .5s ease;
+  }
+  .wm-accordion-block.open button > .icon.angle path {
+    transform: rotate(180deg);
+  }
+}
+
+/*Plus Icon*/
+.wm-accordion-block button > .icon.plus path[data-name="vertical"] {
+  transform: rotate(00deg);
+  transform-origin:50% 50%;
+  will-change:transform;
+  transition: transform .6s ease-out;
+}
+.wm-accordion-block.open button > .icon.plus path[data-name="vertical"] {
+  transform: rotate(90deg)
+}
+
+/*Arrow Icon*/
+.wm-accordion-block button > .icon.arrow svg {
+  transform-origin: 50% 50%;
+  transform: rotate(0deg);
+  will-change:transform;
+  transition: transform .5s ease;
+}
+.wm-accordion-block.open button > .icon.arrow svg {
+  transform: rotate(180deg);
+}
+
+/*X Icon*/
+.wm-accordion-block button > .icon.x svg {
+  transform-origin: 50% 50%;
+  transform: rotate(0deg);
+  will-change:transform;
+  transition: transform .5s ease;
+}
+.wm-accordion-block.open button > .icon.x svg {
+  transform: rotate(45deg)
+}
+
+/*Triangle Icon*/
+.wm-accordion-block button > .icon.triangle svg {
+  transform-origin: 50% 50%;
+  transform: rotate(0deg);
+  will-change:transform;
+  transition: transform .5s ease;
+}
+.wm-accordion-block.open button > .icon.triangle svg {
+  transform: rotate(90deg)
+}
