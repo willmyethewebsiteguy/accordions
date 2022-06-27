@@ -11,6 +11,7 @@
   --accordion-shadow:var(--light);
   --accordion-border-radius: 0px;
   --accordion-background: white;
+  --accordion-border: none;
   --accordion-border-top: none;
   --accordion-border-bottom: 1px solid currentColor;
   --accordion-border-left: none;
