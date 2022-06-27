@@ -51,6 +51,9 @@
     9.6px 8.8px 11.8px -2px hsla(0,0%,0%, 0.24),
     25.5px 23.6px 31.5px -3px hsla(0,0%,0%, 0.19);
 }
+body {
+  --icon-type: plus;
+}
 
 .wm-accordion-block {
   margin:var(--accordion-spacing) 0px !important;
@@ -61,6 +64,7 @@
   border-bottom: var(--accordion-border-bottom);
   border-left: var(--accordion-border-left);
   box-shadow: var(--accordion-shadow);
+  background: var(--accordion-background);
 }
 .contains-wm-accordion{
   padding:0px 17px !important;
@@ -76,6 +80,7 @@
   border: var(--button-border);
   color: var(--button-color);
   display: flex;
+  flex-direction:var(--icon-alignment);
   align-items: center;
   text-align: var(--button-text-align);
   gap: 8px;
@@ -91,6 +96,9 @@
   background: var(--active-button-background);
   opacity: var(--active-button-opacity);
   color: var(--active-button-color);
+}
+.wm-accordion-block button.accordion-toggle .text {
+  flex:1;
 }
 .wm-accordion-block button.accordion-toggle .text *{
   margin:0;
