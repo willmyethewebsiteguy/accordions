@@ -10,8 +10,7 @@
 
   --accordion-shadow:var(--light);
   --accordion-border-radius: 0px;
-  --accordion-background: none;
-  --accordion-border:;
+  --accordion-background: white;
   --accordion-border-top: none;
   --accordion-border-bottom: 1px solid currentColor;
   --accordion-border-left: none;
@@ -21,7 +20,6 @@
   --button-padding-h: 17px;
   --button-color: currentColor;
   --button-background: transparent;
-  --button-opacity: 1;
   --button-border: none;
   --button-text-align: start;
   
@@ -36,18 +34,19 @@
   --icon-size: 15px;
   --icon-thickness: 4px;
   --icon-color: currentColor;
+  --icon-alignment: row;
   
   --content-background: transparent; 
   
-  --product-accordions-container-margin: 17px;
+  --product-accordions-container-margin: 34px;
 
-  --light:
+  --shadow-light:
     0.4px 0.4px 1px hsla(0,0%,0%, 0.25),
     1.5px 1.4px 1.9px -3.9px hsla(0,0%,0%, 0.19);
-  --medium:
+  --shadow-medium:
     0.4px 0.4px 1px hsla(0,0%,0%, 0.33),
     9.6px 8.8px 7.8px -4px hsla(0,0%,0%, 0.24);
-  --heavy: 
+  --shadow-heavy: 
     0.4px 0.4px 0.5px hsla(0,0%,0%, 0.33),
     9.6px 8.8px 11.8px -2px hsla(0,0%,0%, 0.24),
     25.5px 23.6px 31.5px -3px hsla(0,0%,0%, 0.19);
