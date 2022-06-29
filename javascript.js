@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.006/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.007/styles.min.css'
   };
   const defaults = {
     icons: {
