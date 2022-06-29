@@ -66,10 +66,7 @@ body {
   border-left: var(--accordion-border-left);
   box-shadow: var(--accordion-shadow);
   background: var(--accordion-background);
-}
-.wm-accordion-block .accordion-wrapper {
   overflow: hidden;
-  position: relative;
 }
 .contains-wm-accordion{
   padding:0px 17px !important;
