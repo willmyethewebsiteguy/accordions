@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.009/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.010/styles.min.css'
   };
   const defaults = {
     icons: {
@@ -419,12 +419,14 @@
       }
 
       injectTemplate(this);
+
+      Squarespace?.globalInit(Y);
       this.initImages(this);
-      
+
       let newAccs = this.settings.container.querySelectorAll('.wm-accordion-block');
       newAccs.forEach(el => {
         new wmAccordion(el);
-      });    
+      });
     }
 
     Constructor.prototype.initImages = function (instance) {
