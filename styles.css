@@ -79,7 +79,10 @@ body {
   width: 100%;
   background: var(--button-background);
   padding: var(--button-padding-v)  var(--button-padding-h);
-  border: var(--button-border);
+  border-top: var(--button-border-top);
+  border-right: var(--button-border-right);
+  border-bottom: var(--button-border-bottom);
+  border-left: var(--button-border-left);
   color: var(--button-color);
   display: flex;
   flex-direction:var(--icon-alignment);
