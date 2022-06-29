@@ -157,12 +157,6 @@ body:not(.sqs-edit-mode-active) .hide-section {
   display:none !important;
 }
 
-/*Collection Adjustments*/
-.wm-accordion-block .sqs-layout > .sqs-row {
-  margin-left: 0;
-  margin-right: 0;
-}
-
 .wm-accordion-block .fluid-engine {
   padding:17px;
 }
