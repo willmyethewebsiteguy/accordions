@@ -1,5 +1,4 @@
-/** 
- * Version 3.1
+/** Version 3.1
  * Accordion Dropdown Plugins for Squarespace 
  * Copyright Will Myers 
 **/
@@ -52,9 +51,6 @@
     0.4px 0.4px 0.5px hsla(0,0%,0%, 0.33),
     9.6px 8.8px 11.8px -2px hsla(0,0%,0%, 0.24),
     25.5px 23.6px 31.5px -3px hsla(0,0%,0%, 0.19);
-}
-body {
-  --icon-type: plus;
 }
 
 [data-wm-plugin="accordion"] {
