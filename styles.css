@@ -1,8 +1,8 @@
 /** Version 3.1
  * Accordion Dropdown Plugins for Squarespace 
-* Copyright Will Myers 
+ * Copyright Will Myers 
 **/
-.wm-accordion-block{ 
+[data-wm-plugin="accordion"]{ 
   --accordion-spacing: 0px;
   --content-padding-h: 0px;
   --content-padding-v: 17px;
@@ -55,6 +55,7 @@
 body {
   --icon-type: plus;
 }
+
 [data-wm-plugin="accordion"] {
   display:grid;
   gap: var(--accordion-spacing) 0px !important;
