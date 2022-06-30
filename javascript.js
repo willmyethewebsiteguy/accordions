@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.004/styles.min.css'
+    cssFile: 'https://assets.codepen.io/3198845/WMAccordionTESTING.css'
   };
   const defaults = {
     icons: {
@@ -64,9 +64,12 @@
     
     function openAccordion(instance) {
       let acc = instance.settings;
-      acc.groupAccs.forEach(el => {
-        el.wmAccordion?.close();
-      })      
+      
+      if (!acc.allowMultipleOpen) {
+        acc.groupAccs.forEach(el => {
+          el.wmAccordion?.close();
+        });
+      }
 
       acc.setHeight = acc.content.scrollHeight;
       acc.content.style.height = `${acc.height}px`;
@@ -165,6 +168,9 @@
         group: null,
         initOpen: null,
         height: null,
+        get groupContainer() {
+          return this.container.closest('[data-wm-plugin="accordion"]');
+        },
         get button() {
           return this.container.querySelector('button');
         },
@@ -181,10 +187,14 @@
           return this.container.dataset.group;
         },
         get groupAccs() {
-          return document.querySelectorAll(`.wm-accordion-block[data-group="${this.groupID}"]`);
+          return this.groupContainer.querySelectorAll('.wm-accordion-block');
         },
         set setHeight(height) {
           this.height = height;
+        },
+        get allowMultipleOpen() {
+          let allow = this.groupContainer.dataset.allowMultipleOpen !== undefined ? true : false;
+          return allow;
         }
       }
 
@@ -262,7 +272,7 @@
       return `<div class="icon ${icon}">
   ${defaults.icons[icon]}
 </div>`;
-    } 
+    }
 
     let injectTemplate = (instance) => {
       let container = instance.settings.container;
@@ -370,19 +380,18 @@
   let BuildAccordionsFromCollection = (function(){
 
     function setIcon() {
-      let acc = document.querySelector('.wm-accordion-block'),
+      let acc = document.querySelector('[data-wm-plugin="accordion"]'),
           fakeAcc = '';
       if (!acc) {
-        fakeAcc = `<div class="wm-accordion-block fake-acc"></div>`;
+        fakeAcc = `<div data-wm-plugin="accordion" class="fake-acc"></div>`;
         document.body.insertAdjacentHTML('beforeend', fakeAcc);
-        acc = document.querySelector('.wm-accordion-block');
+        acc = document.querySelector('[data-wm-plugin="accordion"]');
       }
-      
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
       if (fakeAcc) acc.remove();
       return {html: defaults.icons[icon], id: icon};
-    } 
+    }
 
     let injectTemplate = (instance) => {
       let container = instance.settings.container;
@@ -459,13 +468,14 @@
 
     function setIcon(instance) {
       let acc = instance.settings.container;
-      
+      //console.log(acc)
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
+      console.log(icon);
       return `<div class="icon ${icon}">
   ${defaults.icons[icon]}
 </div>`;
-    } 
+    }
 
     /*let addTargets = (instance) => {
       let container = instance.settings.contentContainer,
@@ -489,8 +499,7 @@
         let targets = acc.dataset?.target,
             wrapper = acc.querySelector('.accordion-content-wrapper');
 
-        if (targets === 'undefined') targets = '1';
-        //console.log(targets); 
+        if (targets === '') targets = '1';
         targets = targets.split(',');
         
         targets.forEach(target => {
@@ -523,7 +532,7 @@
       
       accs.forEach(acc => {
         let template = `
-      <div class="wm-accordion-block loaded" data-target='${acc.dataset?.target}'>
+      <div class="wm-accordion-block loaded" data-target='${acc.dataset.target ? `${acc.dataset.target}` : ``}'>
         <div class="accordion-wrapper">
           <button class="accordion-toggle">
             <div class="text">${acc.innerText}</div>
@@ -592,6 +601,10 @@
         container: el,
         get data() {
           return this.initEl.dataset
+        },
+        get groupContainer() {
+          console.log(this.container);
+          return this.container.closest('[data-wm-plugin="accordion"]');
         },
         get accs() {
           return this.container.querySelectorAll('.wm-accordion-block');
