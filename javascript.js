@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.003/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.004/styles.min.css'
   };
   const defaults = {
     icons: {
@@ -266,7 +266,8 @@
 
     let injectTemplate = (instance) => {
       let container = instance.settings.container;
-      container.classList = 'wm-accordion-block loaded';
+      container.classList = 'loaded';
+      container.dataset.wmPlugin = 'accordion';
       
       if (container.tagname !== "DIV") {
         let div = document.createElement('div');
@@ -280,17 +281,18 @@
       container.closest('.sqs-block')?.classList.add('contains-wm-accordion');
       
       let template = `
-      <div class="accordion-wrapper">
-        <button class="accordion-toggle">
-          <div class="text">${instance.settings.title}</div>
-          ${setIcon(instance)}
-        </button>
-        <div class="accordion-content">
-          <div class="accordion-content-wrapper">
+      <div class="wm-accordion-block loaded">
+        <div class="accordion-wrapper">
+          <button class="accordion-toggle">
+            <div class="text">${instance.settings.title}</div>
+            ${setIcon(instance)}
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-content-wrapper">
+            </div>
           </div>
         </div>
-      </div>
-      `
+      </div>`
       return instance.settings.container.innerHTML = template;
     }
     
@@ -340,6 +342,9 @@
         get data() {
           return this.initEl.dataset
         },
+        get acc() {
+          return this.container.querySelector('.wm-accordion-block');
+        },
         get title() {
           return this.initEl.innerHTML;
         },
@@ -357,7 +362,7 @@
       
       reposition(this);
       
-      new wmAccordion(this.settings.container, this.settings);
+      new wmAccordion(this.settings.acc, this.settings);
     }
 
     return Constructor;
