@@ -11,7 +11,6 @@
 
   --accordion-shadow:var(--light);
   --accordion-border-radius: 0px;
-  --accordion-background: white;
   --accordion-border: none;
   --accordion-border-top: none;
   --accordion-border-bottom: 1px solid currentColor;
@@ -24,10 +23,8 @@
   --button-background: transparent;
   --button-border: none;
   --button-text-align: start;
-  
-  --hover-button-color: currentColor;
+
   --hover-button-opacity: 0.6;
-  --hover-button-background: transparent;
   
   --active-button-color: currentColor;
   --active-button-opacity: 1;
@@ -78,7 +75,6 @@
 
 .wm-accordion-block button.accordion-toggle{
   width: 100%;
-  background: var(--button-background);
   padding: var(--button-padding-v)  var(--button-padding-h);
   border-top: var(--button-border-top);
   border-right: var(--button-border-right);
@@ -94,9 +90,7 @@
   cursor: pointer;
 }
 .wm-accordion-block button.accordion-toggle:hover{
-  background: var(--hover-button-background);
   opacity: var(--hover-button-opacity);
-  color: var(--hover-button-color);
 }
 .wm-accordion-block.open button.accordion-toggle{
   background: var(--active-button-background);
