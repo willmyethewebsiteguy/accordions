@@ -94,11 +94,11 @@
 }
 .wm-accordion-block.open button.accordion-toggle{
   background: var(--active-button-background);
-  opacity: var(--active-button-opacity);
   color: var(--active-button-color);
 }
 .wm-accordion-block button.accordion-toggle .text {
   flex:1;
+  color: var(--active-button-color);
 }
 .wm-accordion-block button.accordion-toggle .text *{
   margin:0;
@@ -110,6 +110,11 @@
 .wm-accordion-block button > .icon svg,
 .wm-accordion-block button > .icon path{
   stroke:var(--icon-color, var(--button-color));
+  stroke-width: var(--icon-thickness);
+}
+.wm-accordion-block.open button > .icon svg,
+.wm-accordion-block.open button > .icon path{
+  stroke:var(--icon-color, var(--active-button-color));
   stroke-width: var(--icon-thickness);
 }
 
