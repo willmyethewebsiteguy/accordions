@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.005/javascript.min.js'
+    cssFile: 'https://assets.codepen.io/3198845/WMAccordionTESTING.css'
   };
   const defaults = {
     icons: {
@@ -61,6 +61,18 @@
   }
 
   let wmAccordion = (function(){
+    
+    function setAllowMultipleOpenAttr(instance) {
+      let accGroup = instance.settings.groupContainer;
+      //console.log(acc)
+      let styles = window.getComputedStyle(accGroup),
+          value = styles.getPropertyValue('--allow-multiple-open').trim();
+      
+      if (value === 'true') {
+        accGroup.setAttribute('data-allow-multiple-open', '');
+      }
+      return 
+    }
     
     function openAccordion(instance) {
       let acc = instance.settings;
@@ -200,6 +212,9 @@
 
       //get Local Settings
       getLocalSettings(this);
+      
+      //set Allow Multiple Open Variable
+      setAllowMultipleOpenAttr(this);
 
       //Set Toggle Listener
       createClickListener(this);
