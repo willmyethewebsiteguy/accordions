@@ -168,6 +168,12 @@ body:not(.sqs-edit-mode-active) .hide-section {
   box-sizing:border-box;
 }
 
+/*Accordion in FE, but Blocks from CE*/
+[data-wm-plugin="accordion"][data-source] :not(.fluid-engine) .sqs-block {
+  padding-top:17px;
+  padding-bottom:17px;
+}
+
 /*Product Page Container */
 .ProductItem-details-accordion .wm-accordion-block:last-child{
   margin-bottom: var(--product-accordions-container-margin) !important;
