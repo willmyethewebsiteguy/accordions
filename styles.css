@@ -94,7 +94,6 @@
 }
 .wm-accordion-block.open button.accordion-toggle{
   background: var(--active-button-background);
-  color: var(--active-button-color);
 }
 .wm-accordion-block button.accordion-toggle .text {
   flex:1;
