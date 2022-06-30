@@ -1,12 +1,12 @@
 /* ==========
-  Version 3.0
+  Version 3.1
   Accordion Dropdown Plugins for Squarespace
   Copyright Will Myers 
 ========== */
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.0.011/styles.min.css'
+    cssFile: 'https://assets.codepen.io/3198845/WMAccordionTESTING.css'
   };
   const defaults = {
     icons: {
@@ -462,45 +462,96 @@
 </div>`;
     } 
 
-    let injectTemplate = (instance) => {
-      let container = instance.settings.container;
-      container.classList = 'wm-accordion-block loaded';
-      container.closest('.sqs-block')?.classList.add('contains-wm-accordion');
+    /*let addTargets = (instance) => {
+      let container = instance.settings.contentContainer,
+          targetsArr = instance.settings.targetsArr;
 
-      let template = `
-      <div class="accordion-wrapper">
-        <button class="accordion-toggle">
-          <div class="text">${instance.settings.title}</div>
-          ${setIcon(instance)}
-        </button>
-        <div class="accordion-content">
-          <div class="accordion-content-wrapper">
+      targetsArr.forEach(target => {
+        let el = document.querySelector(target);
+        if (el?.closest('.fe-block')) {
+          el = el.closest('.fe-block')
+        }
+
+        container.append(el);
+      });
+    }*/
+    
+    let addTargets = (instance) => {
+      let container = instance.settings.container,
+          accs = container.querySelectorAll('.wm-accordion-block');
+
+      accs.forEach(acc => {
+        let targets = acc.dataset?.target,
+            wrapper = acc.querySelector('.accordion-content-wrapper');
+
+        if (targets === 'undefined') targets = '1';
+        //console.log(targets); 
+        targets = targets.split(',');
+        
+        targets.forEach(target => {
+          let el;
+          if (!parseInt(target)) {
+            el = document.querySelector(target);
+            if (el?.closest('.fe-block')) {
+              el = el.closest('.fe-block')
+            }
+          } else {
+            el = acc.closest('.page-section').nextElementSibling;
+          }
+          wrapper.append(el);
+        });
+      })
+    }
+
+    let injectTemplate = (instance) => {
+      let container = instance.settings.container,
+          accsHTML = '';
+      container.classList.add('loaded');
+      container.closest('.sqs-block')?.classList.add('contains-wm-accordion');
+      
+      let accs = container.querySelectorAll(':scope > *');
+      
+      if (accs.length === 0) {
+        container.insertAdjacentHTML('afterbegin', `<button>${container.innerText}</button>`)
+        accs = container.querySelectorAll(':scope > *');
+      }
+      
+      accs.forEach(acc => {
+        let template = `
+      <div class="wm-accordion-block loaded" data-target='${acc.dataset?.target}'>
+        <div class="accordion-wrapper">
+          <button class="accordion-toggle">
+            <div class="text">${acc.innerText}</div>
+            ${setIcon(instance)}
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-content-wrapper">
+            </div>
           </div>
         </div>
       </div>
       `;
-      
-      return container.innerHTML = template;
-    }
-    
-    let addTargets = (instance) => {
-      let container = instance.settings.contentContainer,
-          targetsArr = instance.settings.targetsArr;
-      
-      targetsArr.forEach(target => {
-        let el = document.querySelector(target);
-        /*if (target.includes('data-section-id') && utils.inIframe) {
-          console.log('iniFrame')
-          let newEl = el.cloneNode(true);
-          el.classList.add('hide-section');
-          el = newEl;
-        }*/
-        if (el?.closest('.fe-block')) {
-          el = el.closest('.fe-block')
-        }
-        
-        container.append(el);
+        accsHTML = accsHTML + template;
       });
+      
+      return container.innerHTML = accsHTML;
+      
+      /*let template = `
+      <div class="wm-accordion-block loaded">
+        <div class="accordion-wrapper">
+          <button class="accordion-toggle">
+            <div class="text">${instance.settings.title}</div>
+            ${setIcon(instance)}
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-content-wrapper">
+            </div>
+          </div>
+        </div>
+      </div>
+      `;*/
+      
+      //return container.innerHTML = template;
     }
 
     /**
@@ -537,6 +588,9 @@
         get data() {
           return this.initEl.dataset
         },
+        get accs() {
+          return this.container.querySelectorAll('.wm-accordion-block');
+        },
         get elWrapper() {
           return this.initEl.closest('.sqs-block-content')
         },
@@ -559,8 +613,10 @@
 
       // Breakdown when in Edit Mode
       watchForEditMode(this);
-      
-      new wmAccordion(this.settings.container, this.settings);
+
+      this.settings.accs.forEach(acc => {
+        new wmAccordion(acc, this.settings);
+      });
     }
     
     /**
@@ -641,14 +697,16 @@
         }
       })
     }
-    let initCollections = document.querySelectorAll(`[data-wm-plugin="accordion"][data-source]:not(.loaded, .loading), [data-wm-plugin="accordions"][data-source]:not(.loaded, .loading)`);
+    
+    // Build From Collection URL (Collection URL)
+    let initCollections = document.querySelectorAll(`[data-wm-plugin="accordion"][data-source]:not(.loaded, .loading), [data-wm-plugin="accordions"][data-source]:not(.loaded, .loading)`); 
     for (const el of initCollections) {
       el.classList.add('loading');
       buildTabsFromCollection(el, el.dataset.source);
     }
 
-    //Build Accordion from Selectors
-    let initFromSelectors = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded)[data-target]`);
+    //Build Accordion from Selectors (Fluid Engine)
+    let initFromSelectors = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded, [data-source])`);
     for (const el of initFromSelectors) {
       try {
         new BuildAccordionFromSelector(el)
@@ -658,8 +716,8 @@
       }
     }
 
-    //Build Accordion from Stacked Blocks 
-    let initFromStackedBlocks = document.querySelectorAll(`[data-wm-plugin="accordion"][data-accordion-start]:not(.loaded), .wm-accordion-start:not(.loaded)`);
+    //Build Accordion from Stacked Blocks (Classic Editor)
+    let initFromStackedBlocks = document.querySelectorAll(`.wm-accordion-start:not(.loaded)`);
     for (const el of initFromStackedBlocks) {
       try {
         new BuildAccordionFromStackedBlocks(el);
@@ -670,7 +728,7 @@
     }
 
     //From Raw HTML
-    let accordionContainers = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded, .loading, [data-accordion-start]), .wm-accordion-block:not(.loaded, .loading)`);
+    /*let accordionContainers = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded, .loading) button.accordion-toggle`);
     for (const el of accordionContainers) {
       try {
         new wmAccordion(el);
@@ -678,7 +736,7 @@
         console.error('Problem Loading the Accordions Plugin', el)
         console.log(err)
       }
-    }
+    }*/
   }
 
   initAccordions();
