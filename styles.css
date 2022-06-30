@@ -3,6 +3,7 @@
  * Copyright Will Myers 
 **/
 [data-wm-plugin="accordion"]{ 
+  --allow-multiple-open: false;
   --accordion-spacing: 0px;
   --content-padding-h: 0px;
   --content-padding-v: 17px;
