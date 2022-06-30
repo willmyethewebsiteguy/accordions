@@ -32,7 +32,6 @@
   
   --icon-size: 15px;
   --icon-thickness: 4px;
-  --icon-color: currentColor;
   --icon-alignment: row;
   
   --content-background: transparent; 
@@ -80,6 +79,7 @@
   border-right: var(--button-border-right);
   border-bottom: var(--button-border-bottom);
   border-left: var(--button-border-left);
+  border-radius: var(--accordion-border-radius);
   color: var(--button-color);
   display: flex;
   flex-direction:var(--icon-alignment);
@@ -94,9 +94,13 @@
 }
 .wm-accordion-block.open button.accordion-toggle{
   background: var(--active-button-background);
+  border-radius: var(--accordion-border-radius) var(--accordion-border-radius) 0 0;
+  opacity:1;
 }
 .wm-accordion-block button.accordion-toggle .text {
   flex:1;
+}
+.wm-accordion-block.open button.accordion-toggle .text {
   color: var(--active-button-color);
 }
 .wm-accordion-block button.accordion-toggle .text *{
@@ -105,6 +109,8 @@
 .wm-accordion-block button > .icon {
   width: var(--icon-size);
   height: var(--icon-size);
+  display: grid;
+  place-items: center;
 }
 .wm-accordion-block button > .icon svg,
 .wm-accordion-block button > .icon path{
