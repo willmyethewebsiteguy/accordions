@@ -170,6 +170,20 @@ body:not(.sqs-edit-mode-active) .hide-section {
   box-sizing:border-box;
 }
 
+/*If Fluid Engine Blocks as the Target*/
+/*All FE Image Blocks*/
+.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container img{
+  position:relative !important;
+}
+/*Content FILL FE Image Blocks*/
+.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill, .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill img{
+  position:relative !important;
+}
+/*Content FIT FE Image Blocks*/
+.wm-accordion-block .accordion-content-wrapper > .fe-block .sqs-block-image .sqs-image-content {
+  width: 100% !important;
+}
+
 /*Accordion in FE, but Blocks from CE*/
 [data-wm-plugin="accordion"][data-source] :not(.fluid-engine) .sqs-block {
   padding-top:17px;
@@ -177,8 +191,8 @@ body:not(.sqs-edit-mode-active) .hide-section {
 }
 
 /*Product Page Container */
-.ProductItem-details-accordion .wm-accordion-block:last-child{
-  margin-bottom: var(--product-accordions-container-margin) !important;
+.ProductItem-details-accordion {
+  margin-bottom: 34px;
 }
 
 /*Angled Bracket*/
