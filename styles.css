@@ -155,7 +155,7 @@
   padding: 0px !important;
   min-height: unset !important;
 }
-.wm-accordion-block .accordion-content .content-wrapper {
+.wm-accordion-block .accordion-content .page-section > .content-wrapper {
   padding: 0px !important;
 }
 body:not(.sqs-edit-mode-active) .hide-section {
