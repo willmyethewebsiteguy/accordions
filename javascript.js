@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.013/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.014/styles.min.css'
   };
   const defaults = {
     icons: {
@@ -486,25 +486,10 @@
       //console.log(acc)
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
-      console.log(icon);
       return `<div class="icon ${icon}">
   ${defaults.icons[icon]}
 </div>`;
     }
-
-    /*let addTargets = (instance) => {
-      let container = instance.settings.contentContainer,
-          targetsArr = instance.settings.targetsArr;
-
-      targetsArr.forEach(target => {
-        let el = document.querySelector(target);
-        if (el?.closest('.fe-block')) {
-          el = el.closest('.fe-block')
-        }
-
-        container.append(el);
-      });
-    }*/
     
     let addTargets = (instance) => {
       let container = instance.settings.container,
@@ -550,7 +535,7 @@
       <div class="wm-accordion-block loaded" data-target='${acc.dataset.target ? `${acc.dataset.target}` : ``}'>
         <div class="accordion-wrapper">
           <button class="accordion-toggle">
-            <div class="text">${acc.innerText}</div>
+            <div class="text">${acc.innerHTML}</div>
             ${setIcon(instance)}
           </button>
           <div class="accordion-content">
@@ -564,23 +549,6 @@
       });
       
       return container.innerHTML = accsHTML;
-      
-      /*let template = `
-      <div class="wm-accordion-block loaded">
-        <div class="accordion-wrapper">
-          <button class="accordion-toggle">
-            <div class="text">${instance.settings.title}</div>
-            ${setIcon(instance)}
-          </button>
-          <div class="accordion-content">
-            <div class="accordion-content-wrapper">
-            </div>
-          </div>
-        </div>
-      </div>
-      `;*/
-      
-      //return container.innerHTML = template;
     }
 
     /**
@@ -618,7 +586,6 @@
           return this.initEl.dataset
         },
         get groupContainer() {
-          console.log(this.container);
           return this.container.closest('[data-wm-plugin="accordion"]');
         },
         get accs() {
