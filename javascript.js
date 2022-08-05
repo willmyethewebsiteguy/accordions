@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.015/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.016/styles.min.css'
   };
   const defaults = {
     icons: {
@@ -82,10 +82,20 @@
           el.wmAccordion?.close();
         });
       }
-
-      acc.setHeight = acc.content.scrollHeight;
-      acc.content.style.height = `${acc.height}px`;
-      acc.container.classList.add('open');
+      
+      function setHeight() {
+        acc.setHeight = acc.contentWrapper.scrollHeight;
+        acc.content.style.height = `${acc.height}px`;
+        acc.container.classList.add('open'); 
+      }
+      setHeight();
+      
+      function transitionEnded() {
+        setHeight();
+        acc.content.removeEventListener('transitionend', transitionEnded)
+      }
+      
+      acc.content.addEventListener('transitionend', transitionEnded)
     }
 
     function closeAccordion(instance) {
