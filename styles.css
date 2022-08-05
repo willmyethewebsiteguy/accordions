@@ -198,66 +198,66 @@ body:not(.sqs-edit-mode-active) .hide-section {
 
 /*Angled Bracket*/
 @supports (d: path('M4 16 l28 26 L60 16')) {
-  .wm-accordion-block button > .icon.angle path {
+  .wm-accordion-block > .accordion-wrapper > button > .icon.angle path {
     d: path('M4 16 l28 26 L60 16');
     transition: d .6s ease-in-out;
   }
-  .wm-accordion-block.open button > .icon.angle path {
+  .wm-accordion-block.open > .accordion-wrapper > button > .icon.angle path {
     d: path('M4 42 l28 -26 L60 42');
   }
 }
 @supports not (d: path('M4 16 l28 26 L60 16')) {
-  .wm-accordion-block button > .icon.angle path {
+  .wm-accordion-block button > .accordion-wrapper > .icon.angle path {
     transform: rotate(0deg);
     transform-origin: 50% 50%;
     will-change:transform;
     transition: transform .5s ease;
   }
-  .wm-accordion-block.open button > .icon.angle path {
+  .wm-accordion-block.open > .accordion-wrapper > button > .icon.angle path {
     transform: rotate(180deg);
   }
 }
 
 /*Plus Icon*/
-.wm-accordion-block button > .icon.plus path[data-name="vertical"] {
+.wm-accordion-block > .accordion-wrapper > button > .icon.plus path[data-name="vertical"] {
   transform: rotate(00deg);
   transform-origin:50% 50%;
   will-change:transform;
   transition: transform .6s ease-out;
 }
-.wm-accordion-block.open button > .icon.plus path[data-name="vertical"] {
+.wm-accordion-block.open > .accordion-wrapper > button > .icon.plus path[data-name="vertical"] {
   transform: rotate(90deg)
 }
 
 /*Arrow Icon*/
-.wm-accordion-block button > .icon.arrow svg {
+.wm-accordion-block > .accordion-wrapper > button > .icon.arrow svg {
   transform-origin: 50% 50%;
   transform: rotate(0deg);
   will-change:transform;
   transition: transform .5s ease;
 }
-.wm-accordion-block.open button > .icon.arrow svg {
+.wm-accordion-block.open > .accordion-wrapper > button > .icon.arrow svg {
   transform: rotate(180deg);
 }
 
 /*X Icon*/
-.wm-accordion-block button > .icon.x svg {
+.wm-accordion-block > .accordion-wrapper > button > .icon.x svg {
   transform-origin: 50% 50%;
   transform: rotate(0deg);
   will-change:transform;
   transition: transform .5s ease;
 }
-.wm-accordion-block.open button > .icon.x svg {
+.wm-accordion-block.open > .accordion-wrapper > button > .icon.x svg {
   transform: rotate(45deg)
 }
 
 /*Triangle Icon*/
-.wm-accordion-block button > .icon.triangle svg {
+.wm-accordion-block > .accordion-wrapper > button > .icon.triangle svg {
   transform-origin: 50% 50%;
   transform: rotate(0deg);
   will-change:transform;
   transition: transform .5s ease;
 }
-.wm-accordion-block.open button > .icon.triangle svg {
+.wm-accordion-block.open > .accordion-wrapper > button > .icon.triangle svg {
   transform: rotate(90deg)
 }
