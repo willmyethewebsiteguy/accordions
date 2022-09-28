@@ -119,7 +119,6 @@
 
     function attachSettings(instance) {
       let el = instance.settings.container;
-      console.log(el)
       el.wmAccordion = {
         setting: instance.settings,
         toggle: function() {
