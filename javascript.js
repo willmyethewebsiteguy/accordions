@@ -6,7 +6,8 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1.016/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1/styles.min.css
+'
   };
   const defaults = {
     icons: {
@@ -119,6 +120,7 @@
 
     function attachSettings(instance) {
       let el = instance.settings.container;
+      console.log(el)
       el.wmAccordion = {
         setting: instance.settings,
         toggle: function() {
@@ -240,7 +242,7 @@
 
       this.settings.container.classList.add('loaded');
     }
-
+   
     /**
      * Add CSS
      */
@@ -278,8 +280,7 @@
     return Constructor;
   }());
 
-  let BuildAccordionFromStackedBlocks = (function () {
-
+  let BuildAccordionFromStackedBlocks = (function(){
     function copyAttributes(source, target) {
       return Array.from(source.attributes).forEach(attribute => {
         target.setAttribute(
@@ -403,6 +404,10 @@
     return Constructor;
   })();
   let BuildAccordionsFromCollection = (function(){
+    
+    function clean(str) {
+      return str.trim().toLowerCase().replaceAll(' ', '-');
+    }
 
     function setIcon() {
       let acc = document.querySelector('[data-wm-plugin="accordion"]'),
@@ -422,7 +427,7 @@
       let container = instance.settings.container;
       let template = `
         ${instance.settings.accsObj.map(function (item) {
-          return `<div class="wm-accordion-block loaded" ${instance.settings.data['group'] ? `data-group="${instance.settings.data['group']}"` : null}>
+          return `<div class="wm-accordion-block loaded" ${instance.settings.data['group'] ? `data-group="${instance.settings.data['group']}"` : null} data-accordion-id="${clean(item.title)}">
        <div class="accordion-wrapper">
         <button class="accordion-toggle">
           <div class="text">${item.title}</div>
@@ -466,6 +471,8 @@
       newAccs.forEach(el => {
         new wmAccordion(el);
       });
+      this.settings.container.classList.remove('loading')
+      this.settings.container.classList.add('loaded')
     }
 
     Constructor.prototype.initImages = function (instance) {
@@ -542,7 +549,7 @@
       
       accs.forEach(acc => {
         let template = `
-      <div class="wm-accordion-block loaded" data-target='${acc.dataset.target ? `${acc.dataset.target}` : ``}'>
+      <div class="wm-accordion-block loaded" data-target="${acc.dataset.target ? `${acc.dataset.target}` : ``}" data-accordion-id="${acc.id ? acc.id : ''}">
         <div class="accordion-wrapper">
           <button class="accordion-toggle">
             <div class="text">${acc.innerHTML}</div>
@@ -707,6 +714,23 @@
         }
       })
     }
+    function openFromUrl() {
+      const url = new URL(window.location.href),
+            searchParams = url.searchParams.getAll("accordion");
+
+      if (searchParams) {
+        for (let param of searchParams) {
+          let acc = document.querySelector(`[data-accordion-id="${param}"]`);
+          if (acc) {
+            if (!acc.wmAccordion) {
+              acc.querySelector('.wm-accordion-block').wmAccordion.open();
+            } else {
+              acc.wmAccordion.open()
+            }
+          }
+        }
+      }
+    }
     
     // Build From Collection URL (Collection URL)
     let initCollections = document.querySelectorAll(`[data-wm-plugin="accordion"][data-source]:not(.loaded, .loading), [data-wm-plugin="accordions"][data-source]:not(.loaded, .loading)`); 
@@ -737,16 +761,8 @@
       }
     }
 
-    //From Raw HTML
-    /*let accordionContainers = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded, .loading) button.accordion-toggle`);
-    for (const el of accordionContainers) {
-      try {
-        new wmAccordion(el);
-      } catch (err) {
-        console.error('Problem Loading the Accordions Plugin', el)
-        console.log(err)
-      }
-    }*/
+    //Init Accordions
+    openFromUrl()
   }
 
   initAccordions();
