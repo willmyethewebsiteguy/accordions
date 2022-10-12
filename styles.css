@@ -216,7 +216,7 @@ body:not(.sqs-edit-mode-active) .hide-section {
   }
 }
 @supports not (d: path('M4 16 l28 26 L60 16')) {
-  .wm-accordion-block button > .accordion-wrapper > .icon.angle path {
+  .wm-accordion-block button > .accordion-wrapper > button > .icon.angle path {
     transform: rotate(0deg);
     transform-origin: 50% 50%;
     will-change:transform;
