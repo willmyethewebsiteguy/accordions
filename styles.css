@@ -154,6 +154,9 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   visibility:visible;
 }
 
+.wm-accordion-block .accordion-content-wrapper {
+  padding:17px;
+}
 @media(min-width:767px){
   .wm-accordion-block .accordion-content-wrapper {
     padding: var(--content-padding-v) var(--content-padding-h);
