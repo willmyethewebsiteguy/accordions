@@ -82,20 +82,34 @@
           el.wmAccordion?.close();
         });
       }
-      
+
       function setHeight() {
         acc.setHeight = acc.contentWrapper.scrollHeight;
         acc.content.style.height = `${acc.height}px`;
         acc.container.classList.add('open'); 
       }
-      setHeight();
-      
+      function scrollTo() {
+        let prevAcc = acc.container.previousElementSibling?.querySelector('button');
+        if (!prevAcc) return;
+        let openAccBottom = prevAcc.getBoundingClientRect().bottom;
+
+        if (openAccBottom < 0) {
+          let scrollBy = openAccBottom - 200;
+          window.scrollBy({
+            top: scrollBy,
+            behavior: 'smooth'
+          });
+        }
+      }
       function transitionEnded() {
         setHeight();
-        acc.content.removeEventListener('transitionend', transitionEnded)
+        acc.content.removeEventListener('transitionend', transitionEnded);
+        if (!acc.allowMultipleOpen) scrollTo();
       }
-      
-      acc.content.addEventListener('transitionend', transitionEnded)
+
+      setHeight();
+      acc.content.addEventListener('transitionend', transitionEnded);
+      if (!acc.allowMultipleOpen) scrollTo();
     }
 
     function closeAccordion(instance) {
@@ -148,7 +162,7 @@
     function getLocalSettings(instance) {
       let data = instance.settings.container.dataset;
 
-      for (item in data) {
+      for (let item in data) {
         instance.settings[item] = data[item];
         if (data[item] == ''){
           instance.settings[item] = true;
@@ -217,6 +231,9 @@
         get allowMultipleOpen() {
           let allow = this.groupContainer.dataset.allowMultipleOpen !== undefined ? true : false;
           return allow;
+        },
+        get openAcc() {
+          return this.groupContainer.querySelector('.wm-accordion-block.open')
         }
       }
 
