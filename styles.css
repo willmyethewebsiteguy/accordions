@@ -81,6 +81,11 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   padding: 0px 0px !important;
 }
 
+/*Spacing on Stacked Blocks*/
+.contains-wm-accordion + .contains-wm-accordion .acc-from-stacked {
+  padding-top: var(--accordion-spacing);
+}
+
 .wm-accordion-block button.accordion-toggle{
   width: 100%;
   padding: var(--button-padding-v)  var(--button-padding-h);
