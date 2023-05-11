@@ -6,7 +6,7 @@
 (function () {
   const ps = {
     cssId: 'wm-accordions',
-    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3.1/styles.min.css'
+    cssFile: 'https://cdn.jsdelivr.net/gh/willmyethewebsiteguy/accordions@3/styles.min.css'
   };
   const defaults = {
     icons: {
@@ -161,7 +161,7 @@
 
     function getLocalSettings(instance) {
       let data = instance.settings.container.dataset;
-
+      
       for (let item in data) {
         instance.settings[item] = data[item];
         if (data[item] == ''){
@@ -256,6 +256,10 @@
       buildResizeObserver(this)
 
       this.settings.container.classList.add('loaded');
+
+      if (this.settings.initOpen) {
+        this.open();
+      }
     }
    
     /**
@@ -330,6 +334,7 @@
       }
       
       container.closest('.sqs-block')?.classList.add('contains-wm-accordion');
+      container.classList.add('acc-from-stacked');
       
       let template = `
       <div class="wm-accordion-block loaded">
@@ -380,11 +385,6 @@
       }
     }
     
-    /**
-     * The constructor object
-     * @param {String} selector The selector for the element to render into
-     * @param {Object} options  User options and settings
-     */
     function Constructor(el, options = {}) {
       
       this.settings = {
@@ -440,6 +440,8 @@
 
     let injectTemplate = (instance) => {
       let container = instance.settings.container;
+      container.classList.add('acc-from-collection');
+
       let template = `
         ${instance.settings.accsObj.map(function (item) {
           return `<div class="wm-accordion-block loaded" ${instance.settings.data['group'] ? `data-group="${instance.settings.data['group']}"` : null} data-accordion-id="${clean(item.title)}">
@@ -461,11 +463,7 @@
         `;
       container.innerHTML = template;
     }
-    /**
-     * The constructor object
-     * @param {String} selector The selector for the element to render into
-     * @param {Object} options  User options and settings
-     */
+
     function Constructor(el, options = {}) {
 
       this.settings = {
@@ -515,7 +513,6 @@
 
     function setIcon(instance) {
       let acc = instance.settings.container;
-      //console.log(acc)
       let styles = window.getComputedStyle(acc),
           icon = styles.getPropertyValue('--icon-type').trim();
       return `<div class="icon ${icon}">
@@ -551,8 +548,9 @@
 
     let injectTemplate = (instance) => {
       let container = instance.settings.container,
-          accsHTML = '';
+        accsHTML = '';
       container.classList.add('loaded');
+      container.classList.add('acc-from-selector');
       container.closest('.sqs-block')?.classList.add('contains-wm-accordion');
       
       let accs = container.querySelectorAll(':scope > *');
@@ -583,10 +581,6 @@
       return container.innerHTML = accsHTML;
     }
 
-    /**
-     * Breakdown HTML when in Edit Mode
-     * @param  {Constructor} instance The current instantiation
-     */
     function watchForEditMode(instance) {
       let elemToObserve = document.querySelector("body");
       let prevClassState = elemToObserve.classList.contains("sqs-edit-mode-active");
@@ -604,11 +598,6 @@
       observer.observe(elemToObserve, { attributes: true });
     }
 
-    /**
-     * The constructor object
-     * @param {String} selector The selector for the element to render into
-     * @param {Object} options  User options and settings
-     */
     function Constructor(el, options = {}) {
       
       this.settings = {
@@ -651,9 +640,6 @@
       });
     }
     
-    /**
-     * Destroy this instance
-    */
     Constructor.prototype.destroy = function (instance) {
       //Deconstruct the Tabs Element
       function removeElements() {
@@ -669,6 +655,19 @@
 
   function initAccordions() {
     //Build HTML from Collection
+    function initOpens(){
+      let all = document.querySelectorAll('[data-init-open="all"]');
+      let first = document.querySelectorAll('[data-init-open="first"], [data-init-open="true"]');
+
+      all.forEach(group => {
+        let accs = group.querySelectorAll('.wm-accordion-block');
+        accs.forEach(acc => acc.wmAccordion?.open())
+      })
+
+      first.forEach(group => {
+        group.querySelector('.wm-accordion-block').wmAccordion?.open();
+      })
+    }
     async function getCollectionJSON(url) {
       url += `?format=json-pretty`;
       try {
@@ -723,6 +722,7 @@
       document.querySelectorAll(`[data-wm-plugin="accordion"][data-source="${url}"]:not(.loaded), [data-wm-plugin="accordions"][data-source="${url}"]:not(.loaded)`).forEach(el => {
         try {
           new BuildAccordionsFromCollection(el, {accsObj:results});
+          initOpens();
         } catch (err) {
           console.error('Problem Loading the Accordions From URL')
           console.log(err)
@@ -759,6 +759,7 @@
     for (const el of initFromSelectors) {
       try {
         new BuildAccordionFromSelector(el)
+        initOpens();
       } catch (err) {
         console.error('Problem Loading the Accordions From Selectors')
         console.log(err)
@@ -770,6 +771,7 @@
     for (const el of initFromStackedBlocks) {
       try {
         new BuildAccordionFromStackedBlocks(el);
+        initOpens();
       } catch (err) {
         console.error('Problem Loading the Accordions From Stacked Blocks')
         console.log(err)
