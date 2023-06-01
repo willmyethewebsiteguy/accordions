@@ -278,3 +278,31 @@ body:not(.sqs-edit-mode-active) .hide-section {
 .wm-accordion-block.open > .accordion-wrapper > button > .icon.triangle svg {
   transform: rotate(90deg)
 }
+
+/**
+* Edit Mode Code
+**/
+body.sqs-edit-mode-active [data-wm-plugin="accordion"]{
+  border-bottom: 1px dashed currentColor;
+  position:relative;
+}
+body.sqs-edit-mode-active [data-wm-plugin="accordion"]::after{
+  content: 'New Accordion Start';
+  position: absolute;
+  font-size: 10px;
+  bottom: -10px;
+  padding: 0px 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  left: 50%;
+  transform:translateX(-50%);
+  background: black;
+  color: white;
+  box-sizing: border-box;
+  text-align: center;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+body.sqs-edit-mode-active .sqs-block:hover [data-wm-plugin="accordion"]::after{
+  opacity: 1;
+}
