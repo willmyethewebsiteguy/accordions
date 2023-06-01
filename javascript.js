@@ -1,5 +1,5 @@
 /* ==========
-  Version 3.1
+  Version 3
   Accordion Dropdown Plugins for Squarespace
   Copyright Will Myers 
 ========== */
@@ -102,6 +102,7 @@
         }
       }
       function transitionEnded() {
+        if (!acc.container.matches('.open')) return;
         setHeight();
         acc.content.removeEventListener('transitionend', transitionEnded);
         if (!acc.allowMultipleOpen) scrollTo();
@@ -464,6 +465,25 @@
       container.innerHTML = template;
     }
 
+    function reposition(instance) {
+      let location = instance.settings.initEl.dataset.position,
+          reference = 'beforeend';
+      
+      if (location == "product-details") {
+        let detailsContainer = document.querySelector('.ProductItem-details-checkout'),
+            productAccDetails = document.querySelector('.ProductItem-details-accordion');
+        if(detailsContainer && !productAccDetails) {
+          let container = `<div class="ProductItem-details-accordion"></div>`
+          detailsContainer.querySelector(':scope > :last-child') .insertAdjacentHTML('beforebegin', container);
+        }
+        location = '.ProductItem-details-accordion';
+      } 
+      
+      if (location) {
+        document.querySelector(location).insertAdjacentElement(reference, instance.settings.container)
+      }
+    }
+
     function Constructor(el, options = {}) {
 
       this.settings = {
@@ -476,6 +496,7 @@
       }
 
       injectTemplate(this);
+      reposition(this);
 
       Squarespace?.globalInit(Y);
       this.initImages(this);
@@ -598,6 +619,25 @@
       observer.observe(elemToObserve, { attributes: true });
     }
 
+    function reposition(instance) {
+      let location = instance.settings.initEl.dataset.position,
+          reference = 'beforeend';
+      
+      if (location == "product-details") {
+        let detailsContainer = document.querySelector('.ProductItem-details-checkout'),
+            productAccDetails = document.querySelector('.ProductItem-details-accordion');
+        if(detailsContainer && !productAccDetails) {
+          let container = `<div class="ProductItem-details-accordion"></div>`
+          detailsContainer.querySelector(':scope > :last-child') .insertAdjacentHTML('beforebegin', container);
+        }
+        location = '.ProductItem-details-accordion';
+      } 
+      
+      if (location) {
+        document.querySelector(location).insertAdjacentElement(reference, instance.settings.container)
+      }
+    }
+
     function Constructor(el, options = {}) {
       
       this.settings = {
@@ -634,6 +674,8 @@
 
       // Breakdown when in Edit Mode
       watchForEditMode(this);
+      
+      reposition(this);
 
       this.settings.accs.forEach(acc => {
         new wmAccordion(acc, this.settings);
@@ -669,17 +711,24 @@
       })
     }
     async function getCollectionJSON(url) {
-      url += `?format=json-pretty`;
+      let items = [];
       try {
-        return fetch(url)
-          .then(function (response) {
-          return response.json();
-        })
-          .then(function (json) {
-          return json.items;
-        });
+        const response = await fetch(url);
+        const json = await response.json();
+    
+        if (json.pagination && json.pagination.nextPage) {
+          items = items.concat(json.items);
+          console.log('Current Items: ', items);
+          const nextPageItems = await getCollectionJSON(json.pagination.nextPageUrl + '&format=json-pretty');
+          items = items.concat(nextPageItems);
+        } else {
+          items = items.concat(json.items);
+          console.log('Final Items: ', items);
+        }
+    
+        return items;
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
     async function loadHtml(url) {
@@ -702,9 +751,10 @@
       }
     }
     async function buildTabsFromCollection(el, url) {
-      let collectionObj = await getCollectionJSON(url),
-          results = []
+      let collectionObj = await getCollectionJSON(url + '?format=json-pretty'),
+          results = [];
 
+      console.log(collectionObj)
       collectionObj.forEach(item => {
         let obj = {
           url: item.fullUrl,
