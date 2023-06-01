@@ -64,7 +64,6 @@
     
     function setAllowMultipleOpenAttr(instance) {
       let accGroup = instance.settings.groupContainer;
-      //console.log(acc)
       let styles = window.getComputedStyle(accGroup),
           value = styles.getPropertyValue('--allow-multiple-open').trim();
       
@@ -718,12 +717,10 @@
     
         if (json.pagination && json.pagination.nextPage) {
           items = items.concat(json.items);
-          console.log('Current Items: ', items);
           const nextPageItems = await getCollectionJSON(json.pagination.nextPageUrl + '&format=json-pretty');
           items = items.concat(nextPageItems);
         } else {
           items = items.concat(json.items);
-          console.log('Final Items: ', items);
         }
     
         return items;
@@ -754,7 +751,6 @@
       let collectionObj = await getCollectionJSON(url + '?format=json-pretty'),
           results = [];
 
-      console.log(collectionObj)
       collectionObj.forEach(item => {
         let obj = {
           url: item.fullUrl,
