@@ -64,6 +64,7 @@
     
     function setAllowMultipleOpenAttr(instance) {
       let accGroup = instance.settings.groupContainer;
+      //console.log(acc)
       let styles = window.getComputedStyle(accGroup),
           value = styles.getPropertyValue('--allow-multiple-open').trim();
       
@@ -257,6 +258,8 @@
 
       this.settings.container.classList.add('loaded');
 
+      this.initImages(this);
+
       if (this.settings.initOpen) {
         this.open();
       }
@@ -295,6 +298,25 @@
         loaded();
       }
     };
+
+    Constructor.prototype.initImages = function (instance) {
+      let images = instance.settings.container.querySelectorAll('img');
+      images.forEach(img => {
+        img.classList.add('loaded');
+        let imgData = img.dataset,
+            focalPoint = imgData.imageFocalPoint,
+            parentRation = imgData.parentRatio,
+            src = img.src;
+        if (focalPoint) {
+          let x = focalPoint.split(',')[0] * 100,
+              y = focalPoint.split(',')[1] * 100;
+          img.style.setProperty('--position', `${x}% ${y}%`)
+        }
+        if (!src) {
+          img.src = imgData.src
+        }
+      });
+    }
 
     return Constructor;
   }());
@@ -419,11 +441,9 @@
     return Constructor;
   })();
   let BuildAccordionsFromCollection = (function(){
-    
     function clean(str) {
       return str.trim().toLowerCase().replaceAll(' ', '-');
     }
-
     function setIcon() {
       let acc = document.querySelector('[data-wm-plugin="accordion"]'),
           fakeAcc = '';
@@ -437,7 +457,6 @@
       if (fakeAcc) acc.remove();
       return {html: defaults.icons[icon], id: icon};
     }
-
     let injectTemplate = (instance) => {
       let container = instance.settings.container;
       container.classList.add('acc-from-collection');
@@ -463,7 +482,6 @@
         `;
       container.innerHTML = template;
     }
-
     function reposition(instance) {
       let location = instance.settings.initEl.dataset.position,
           reference = 'beforeend';
@@ -482,7 +500,6 @@
         document.querySelector(location).insertAdjacentElement(reference, instance.settings.container)
       }
     }
-
     function Constructor(el, options = {}) {
 
       this.settings = {
@@ -498,7 +515,7 @@
       reposition(this);
 
       Squarespace?.globalInit(Y);
-      this.initImages(this);
+      /*this.initImages(this);*/
 
       let newAccs = this.settings.container.querySelectorAll('.wm-accordion-block');
       newAccs.forEach(el => {
@@ -507,8 +524,7 @@
       this.settings.container.classList.remove('loading')
       this.settings.container.classList.add('loaded')
     }
-
-    Constructor.prototype.initImages = function (instance) {
+    /*Constructor.prototype.initImages = function (instance) {
       let images = instance.settings.container.querySelectorAll('img');
       images.forEach(img => {
         img.classList.add('loaded');
@@ -525,8 +541,7 @@
           img.src = imgData.src
         }
       });
-    }
-
+    }*/
     return Constructor
   })();
   let BuildAccordionFromSelector = (function(){
@@ -691,6 +706,8 @@
       removeElements();
     };
 
+    
+
     return Constructor;
   }());
 
@@ -706,7 +723,9 @@
       })
 
       first.forEach(group => {
-        group.querySelector('.wm-accordion-block').wmAccordion?.open();
+        if (group.querySelector('.wm-accordion-block')) {
+          group.querySelector('.wm-accordion-block').wmAccordion?.open();
+        } 
       })
     }
     async function getCollectionJSON(url) {
