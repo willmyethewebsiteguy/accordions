@@ -193,6 +193,13 @@ body:not(.sqs-edit-mode-active) .hide-section {
 .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container img{
   position:relative !important;
 }
+
+.wm-accordion-block .summary-item img {
+  width:100% !important;
+  height: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
+}
 /*Content FILL FE Image Blocks*/
 .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill, .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill img{
   position:relative !important;
