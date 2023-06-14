@@ -199,6 +199,7 @@ body:not(.sqs-edit-mode-active) .hide-section {
   height: 100% !important;
   top: 0 !important;
   left: 0 !important;
+  object-fit: cover !important;
 }
 /*Content FILL FE Image Blocks*/
 .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill, .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill img{
