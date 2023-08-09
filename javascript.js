@@ -514,8 +514,12 @@
       injectTemplate(this);
       reposition(this);
 
-      Squarespace?.globalInit(Y);
-      /*this.initImages(this);*/
+      if (window.Squarespace) {
+        window.Squarespace.globalInit(Y);
+        //console.log('global init')
+      } else {
+        //console.log('waiting on SS to load')
+      }
 
       let newAccs = this.settings.container.querySelectorAll('.wm-accordion-block');
       newAccs.forEach(el => {
