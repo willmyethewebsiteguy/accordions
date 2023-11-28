@@ -518,8 +518,10 @@
         window.Squarespace.globalInit(Y);
         //console.log('global init')
       } else {
-        //console.log('waiting on SS to load')
+        console.log('waiting on SS to load')
       }
+      //Squarespace.globalInit(Y);
+      /*this.initImages(this);*/
 
       let newAccs = this.settings.container.querySelectorAll('.wm-accordion-block');
       newAccs.forEach(el => {
@@ -620,6 +622,21 @@
       return container.innerHTML = accsHTML;
     }
 
+    function addSectionIndex() {
+      if (window.top == window.self) return;
+        let sectionsContainer = document.querySelector('#page #sections'),
+          collectionItemSections = document.querySelector('#page #collection-item-sections'),
+          container = collectionItemSections ? collectionItemSections : sectionsContainer,
+          sections = container.querySelectorAll(':scope > .page-section');
+      
+      
+      for (let section of sections) {
+        let index = Array.prototype.indexOf.call(container.children, section);
+        section.dataset.wmAccordionIndexId = index;
+      }
+
+    }
+
     function watchForEditMode(instance) {
       let elemToObserve = document.querySelector("body");
       let prevClassState = elemToObserve.classList.contains("sqs-edit-mode-active");
@@ -685,6 +702,8 @@
           return this.container.querySelector('.accordion-content-wrapper')
         }
       }
+
+      addSectionIndex()
       
       injectTemplate(this);
       
@@ -701,10 +720,18 @@
     }
     
     Constructor.prototype.destroy = function (instance) {
-      //Deconstruct the Tabs Element
+
+      //Deconstruct the Accordion Sections
       function removeElements() {
-        if (!instance.settings) { return }
-        instance.settings.container.remove();
+        //if (!instance.elements) { return }
+        let sectionsContainer = document.querySelector('#page #sections'),
+          collectionItemSections = document.querySelector('#page #collection-item-sections'),
+          sections = document.querySelectorAll('[data-wm-accordion-index-id]'),
+          container = collectionItemSections ? collectionItemSections : sectionsContainer;
+        
+        for (let section of sections) {
+          container.append(section);
+        }
       }
 
       removeElements();
