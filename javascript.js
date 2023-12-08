@@ -730,7 +730,15 @@
           container = collectionItemSections ? collectionItemSections : sectionsContainer;
         
         for (let section of sections) {
-          container.append(section);
+          let index = parseInt(section.getAttribute('data-wm-accordion-index-id'));
+          if (!index) continue;
+          let currentChildAtIndex = container.children[index];
+          console.log(index, currentChildAtIndex)
+          if (currentChildAtIndex) {
+            container.insertBefore(section, currentChildAtIndex);
+          } else {
+            container.appendChild(section);
+          }
         }
       }
 
