@@ -473,7 +473,7 @@
         </button>
         <div class="accordion-content">
           <div class="accordion-content-wrapper">
-            ${item.body.outerHTML}
+            ${item.body}
           </div>
         </div>
       </div>
@@ -623,7 +623,7 @@
     }
 
     function addSectionIndex() {
-      if (window.top == window.self) return;
+      /*if (window.top == window.self) return;
         let sectionsContainer = document.querySelector('#page #sections'),
           collectionItemSections = document.querySelector('#page #collection-item-sections'),
           container = collectionItemSections ? collectionItemSections : sectionsContainer,
@@ -633,7 +633,7 @@
       for (let section of sections) {
         let index = Array.prototype.indexOf.call(container.children, section);
         section.dataset.wmAccordionIndexId = index;
-      }
+      }*/
 
     }
 
@@ -720,20 +720,19 @@
     }
     
     Constructor.prototype.destroy = function (instance) {
-
+      //instance.settings.groupContainer.remove();
       //Deconstruct the Accordion Sections
       function removeElements() {
         //if (!instance.elements) { return }
         let sectionsContainer = document.querySelector('#page #sections'),
           collectionItemSections = document.querySelector('#page #collection-item-sections'),
-          sections = document.querySelectorAll('[data-wm-accordion-index-id]'),
+          sections = instance.settings.container.querySelectorAll('[data-wm-initial-section-index-id]'),
           container = collectionItemSections ? collectionItemSections : sectionsContainer;
         
         for (let section of sections) {
-          let index = parseInt(section.getAttribute('data-wm-accordion-index-id'));
+          let index = parseInt(section.getAttribute('data-wm-initial-section-index-id'));
           if (!index) continue;
           let currentChildAtIndex = container.children[index];
-          console.log(index, currentChildAtIndex)
           if (currentChildAtIndex) {
             container.insertBefore(section, currentChildAtIndex);
           } else {
@@ -744,8 +743,6 @@
 
       removeElements();
     };
-
-    
 
     return Constructor;
   }());
@@ -814,14 +811,14 @@
           url: item.fullUrl,
           title: item.title,
           assetUrl: item.assetUrl,
-          body: ''
+          body: item.body
         }
         results.push(obj);
       })
 
-      await Promise.all(results.map(async (item) => {
+      /*await Promise.all(results.map(async (item) => {
         item.body = await loadHtml(item.url);
-      }));
+      }));*/
 
       document.querySelectorAll(`[data-wm-plugin="accordion"][data-source="${url}"]:not(.loaded), [data-wm-plugin="accordions"][data-source="${url}"]:not(.loaded)`).forEach(el => {
         try {
@@ -886,6 +883,22 @@
     openFromUrl()
   }
 
+  function numberSections() {
+    if (window.top == window.self) return;
+      let sectionsContainer = document.querySelector('#page #sections'),
+        collectionItemSections = document.querySelector('#page #collection-item-sections'),
+        container = collectionItemSections ? collectionItemSections : sectionsContainer,
+        sections = container.querySelectorAll(':scope > .page-section');
+    
+    
+    for (let section of sections) {
+      if (section.dataset.wmInitialSectionIndexId) return;
+      let index = Array.prototype.indexOf.call(container.children, section);
+      section.dataset.wmInitialSectionIndexId = index;
+    }
+  }
+  
+  numberSections();
   initAccordions();
   window.addEventListener('load', initAccordions)
   window.wmAccordionsInit = function() { initAccordions() }
