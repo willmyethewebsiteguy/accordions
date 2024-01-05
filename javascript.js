@@ -849,14 +849,14 @@
     }
     
     // Build From Collection URL (Collection URL)
-    let initCollections = document.querySelectorAll(`[data-wm-plugin="accordion"][data-source]:not(.loaded, .loading), [data-wm-plugin="accordions"][data-source]:not(.loaded, .loading)`); 
+    let initCollections = document.querySelectorAll(`[data-wm-plugin="accordion"][data-source]:not(.loaded):not(.loading), [data-wm-plugin="accordions"][data-source]:not(.loaded):not(.loading)`); 
     for (const el of initCollections) {
       el.classList.add('loading');
       buildTabsFromCollection(el, el.dataset.source);
     }
 
     //Build Accordion from Selectors (Fluid Engine)
-    let initFromSelectors = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded, [data-source])`);
+    let initFromSelectors = document.querySelectorAll(`[data-wm-plugin="accordion"]:not(.loaded):not([data-source])`);
     for (const el of initFromSelectors) {
       try {
         new BuildAccordionFromSelector(el)
@@ -887,8 +887,9 @@
     if (window.top == window.self) return;
       let sectionsContainer = document.querySelector('#page #sections'),
         collectionItemSections = document.querySelector('#page #collection-item-sections'),
-        container = collectionItemSections ? collectionItemSections : sectionsContainer,
-        sections = container.querySelectorAll(':scope > .page-section');
+        container = collectionItemSections ? collectionItemSections : sectionsContainer;
+      if (!container) return;
+      let sections = container.querySelectorAll(':scope > .page-section');
     
     
     for (let section of sections) {
