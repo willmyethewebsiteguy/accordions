@@ -526,10 +526,6 @@
       });
       this.settings.container.classList.remove('loading');
       this.settings.container.classList.add('loaded');
-      utils.emitEvent('wmAccordion:loaded', {
-        block: this.container,
-        source: this.settings.data?.source ? this.settings.data?.source : null
-      });
     }
     
     return Constructor
@@ -804,6 +800,10 @@
         try {
           new BuildAccordionsFromCollection(el, {accsObj:results});
           initOpens();
+          utils.emitEvent('wmAccordion:collectionsLoaded', {
+            block: el,
+            source: url ? url : null
+          });
         } catch (err) {
           console.error('Problem Loading the Accordions From URL')
           console.log(err)
