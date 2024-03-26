@@ -516,38 +516,22 @@
 
       if (window.Squarespace) {
         window.Squarespace.globalInit(Y);
-        //console.log('global init')
       } else {
         console.log('waiting on SS to load')
       }
-      //Squarespace.globalInit(Y);
-      /*this.initImages(this);*/
 
       let newAccs = this.settings.container.querySelectorAll('.wm-accordion-block');
       newAccs.forEach(el => {
         new wmAccordion(el);
       });
-      this.settings.container.classList.remove('loading')
-      this.settings.container.classList.add('loaded')
-    }
-    /*Constructor.prototype.initImages = function (instance) {
-      let images = instance.settings.container.querySelectorAll('img');
-      images.forEach(img => {
-        img.classList.add('loaded');
-        let imgData = img.dataset,
-            focalPoint = imgData.imageFocalPoint,
-            parentRation = imgData.parentRatio,
-            src = img.src;
-        if (focalPoint) {
-          let x = focalPoint.split(',')[0] * 100,
-              y = focalPoint.split(',')[1] * 100;
-          img.style.setProperty('--position', `${x}% ${y}%`)
-        }
-        if (!src) {
-          img.src = imgData.src
-        }
+      this.settings.container.classList.remove('loading');
+      this.settings.container.classList.add('loaded');
+      utils.emitEvent('wmAccordion:loaded', {
+        block: this.container,
+        source: this.settings.data?.source ? this.settings.data?.source : null
       });
-    }*/
+    }
+    
     return Constructor
   })();
   let BuildAccordionFromSelector = (function(){
@@ -815,10 +799,6 @@
         }
         results.push(obj);
       })
-
-      /*await Promise.all(results.map(async (item) => {
-        item.body = await loadHtml(item.url);
-      }));*/
 
       document.querySelectorAll(`[data-wm-plugin="accordion"][data-source="${url}"]:not(.loaded), [data-wm-plugin="accordions"][data-source="${url}"]:not(.loaded)`).forEach(el => {
         try {
