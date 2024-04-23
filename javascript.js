@@ -745,6 +745,10 @@
       })
     }
     async function getCollectionJSON(url) {
+      const preventCache = !!document.querySelector('[data-wm-prevent-cache]');
+      let time = Date.now();
+      preventCache ? url : url += `&time=${time}`
+      
       let items = [];
       try {
         const response = await fetch(url);
@@ -752,7 +756,7 @@
     
         if (json.pagination && json.pagination.nextPage) {
           items = items.concat(json.items);
-          const nextPageItems = await getCollectionJSON(json.pagination.nextPageUrl + '&format=json-pretty');
+          const nextPageItems = await getCollectionJSON(json.pagination.nextPageUrl + '&format=json' );
           items = items.concat(nextPageItems);
         } else {
           items = items.concat(json.items);
@@ -783,7 +787,7 @@
       }
     }
     async function buildTabsFromCollection(el, url) {
-      let collectionObj = await getCollectionJSON(url + '?format=json-pretty'),
+      let collectionObj = await getCollectionJSON(url + '?format=json'),
           results = [];
 
       collectionObj.forEach(item => {
