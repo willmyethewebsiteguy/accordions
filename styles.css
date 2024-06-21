@@ -63,6 +63,9 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   display:grid;
   gap: var(--accordion-spacing) 0px !important;
 }
+[data-wm-plugin="accordion"].acc-from-stacked:not(:last-child){
+  margin-bottom:var(--accordion-spacing) !important;
+}
 .wm-accordion-block {
   border-radius: var(--accordion-border-radius);
   border: var(--accordion-border);
