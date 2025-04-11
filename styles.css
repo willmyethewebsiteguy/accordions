@@ -2,14 +2,14 @@
  * Accordion Dropdown Plugins for Squarespace 
  * Copyright Will Myers 
 **/
-[data-wm-plugin="accordion"]{ 
+[data-wm-plugin="accordion"] {
   --allow-multiple-open: false;
   --accordion-spacing: 0px;
   --content-padding-h: 0px;
   --content-padding-v: 17px;
   --icon-type: plus;
 
-  --accordion-shadow:var(--light);
+  --accordion-shadow: var(--light);
   --accordion-border-radius: 0px;
   --accordion-border: none;
   --accordion-border-top: none;
@@ -25,46 +25,39 @@
   --button-text-align: start;
 
   --hover-button-opacity: 0.6;
-  
+
   --active-button-color: currentColor;
   --active-button-opacity: 1;
   --active-button-background: transparent;
-  
+
   --icon-size: 15px;
   --icon-thickness: 4px;
   --icon-alignment: row;
-  
-  --content-background: transparent; 
-  
+
+  --content-background: transparent;
+
   --product-accordions-container-margin: 34px;
 
-  --shadow-light:
-    0.4px 0.4px 1px hsla(0,0%,0%, 0.25),
-    1.5px 1.4px 1.9px -3.9px hsla(0,0%,0%, 0.19);
-  --shadow-medium:
-    0.4px 0.4px 1px hsla(0,0%,0%, 0.33),
-    9.6px 8.8px 7.8px -4px hsla(0,0%,0%, 0.24);
-  --shadow-heavy: 
-    0.4px 0.4px 0.5px hsla(0,0%,0%, 0.33),
-    9.6px 8.8px 11.8px -2px hsla(0,0%,0%, 0.24),
-    25.5px 23.6px 31.5px -3px hsla(0,0%,0%, 0.19);
+  --shadow-light: 0.4px 0.4px 1px hsla(0, 0%, 0%, 0.25), 1.5px 1.4px 1.9px -3.9px hsla(0, 0%, 0%, 0.19);
+  --shadow-medium: 0.4px 0.4px 1px hsla(0, 0%, 0%, 0.33), 9.6px 8.8px 7.8px -4px hsla(0, 0%, 0%, 0.24);
+  --shadow-heavy: 0.4px 0.4px 0.5px hsla(0, 0%, 0%, 0.33), 9.6px 8.8px 11.8px -2px hsla(0, 0%, 0%, 0.24), 25.5px 23.6px 31.5px -3px hsla(0, 0%, 0%, 0.19);
 }
 
 /*Fade in On Load*/
-body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"]{
-  opacity:0;
-  transition:opacity .3s ease;
+body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"] {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
+body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded {
   opacity: 1;
 }
 
 [data-wm-plugin="accordion"] {
-  display:grid;
+  display: grid;
   gap: var(--accordion-spacing) 0px !important;
 }
-[data-wm-plugin="accordion"].acc-from-stacked:not(:last-child){
-  margin-bottom:var(--accordion-spacing) !important;
+[data-wm-plugin="accordion"].acc-from-stacked:not(:last-child) {
+  margin-bottom: var(--accordion-spacing) !important;
 }
 .wm-accordion-block {
   border-radius: var(--accordion-border-radius);
@@ -77,10 +70,10 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   background: var(--accordion-background);
   overflow: hidden;
 }
-.contains-wm-accordion{
-  padding:0px 17px !important;
+.contains-wm-accordion {
+  padding: 0px 17px !important;
 }
-.fe-block .contains-wm-accordion{
+.fe-block .contains-wm-accordion {
   padding: 0px 0px !important;
 }
 
@@ -89,10 +82,10 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   padding-top: var(--accordion-spacing);
 }
 
-.wm-accordion-block button.accordion-toggle{
+.wm-accordion-block button.accordion-toggle {
   width: 100%;
-  padding: var(--button-padding-v)  var(--button-padding-h);
-  background:var(--button-background);
+  padding: var(--button-padding-v) var(--button-padding-h);
+  background: var(--button-background);
   border-top: var(--button-border-top);
   border-right: var(--button-border-right);
   border-bottom: var(--button-border-bottom);
@@ -100,29 +93,29 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   border-radius: var(--accordion-border-radius);
   color: var(--button-color);
   display: flex;
-  flex-direction:var(--icon-alignment);
+  flex-direction: var(--icon-alignment);
   align-items: center;
   text-align: var(--button-text-align);
   gap: 8px;
   justify-content: space-between;
   cursor: pointer;
 }
-.wm-accordion-block button.accordion-toggle:hover{
+.wm-accordion-block button.accordion-toggle:hover {
   opacity: var(--hover-button-opacity);
 }
-.wm-accordion-block.open button.accordion-toggle{
+.wm-accordion-block.open button.accordion-toggle {
   background: var(--active-button-background);
   border-radius: var(--accordion-border-radius) var(--accordion-border-radius) 0 0;
-  opacity:1;
+  opacity: 1;
 }
 .wm-accordion-block button.accordion-toggle .text {
-  flex:1;
+  flex: 1;
 }
 .wm-accordion-block.open button.accordion-toggle .text {
   color: var(--active-button-color);
 }
-.wm-accordion-block button.accordion-toggle .text *{
-  margin:0;
+.wm-accordion-block button.accordion-toggle .text * {
+  margin: 0;
 }
 .wm-accordion-block button > .icon {
   width: var(--icon-size);
@@ -131,48 +124,46 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   place-items: center;
 }
 .wm-accordion-block button > .icon svg,
-.wm-accordion-block button > .icon path{
-  stroke:var(--icon-color, var(--button-color));
+.wm-accordion-block button > .icon path {
+  stroke: var(--icon-color, var(--button-color));
   stroke-width: var(--icon-thickness);
 }
 .wm-accordion-block.open button > .icon svg,
-.wm-accordion-block.open button > .icon path{
-  stroke:var(--icon-color, var(--active-button-color));
+.wm-accordion-block.open button > .icon path {
+  stroke: var(--icon-color, var(--active-button-color));
   stroke-width: var(--icon-thickness);
 }
 
 .wm-accordion-block button.icon-reverse {
-  flex-direction:row-reverse;
+  flex-direction: row-reverse;
   justify-content: flex-end;
 }
 
 .wm-accordion-block .accordion-content {
-  box-sizing:border-box;
-  height:0px;
-  background:var(--content-background);
-  transition: height .5s ease, 
-    visibility 0s linear .5s;
-  overflow:hidden;
-  visibility:hidden;
+  box-sizing: border-box;
+  height: 0px;
+  background: var(--content-background);
+  transition: height 0.5s ease, visibility 0s linear 0.5s;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 .wm-accordion-block.open .accordion-content {
-  transition: height .5s ease, 
-    visibility 0s linear 0s;
-  visibility:visible;
+  transition: height 0.5s ease, visibility 0s linear 0s;
+  visibility: visible;
 }
 
 .wm-accordion-block .accordion-content-wrapper {
-  padding:17px;
+  padding: 17px;
 }
-@media(min-width:767px){
+@media (min-width: 767px) {
   .wm-accordion-block .accordion-content-wrapper {
     padding: var(--content-padding-v) var(--content-padding-h);
   }
 }
 
 /*Targeting Sections Adjustings*/
-.wm-accordion-block .accordion-content section.page-section{
+.wm-accordion-block .accordion-content section.page-section {
   padding: 0px !important;
   min-height: unset !important;
 }
@@ -180,33 +171,47 @@ body:not(.sqs-edit-mode-active) [data-wm-plugin="accordion"].loaded{
   padding: 0px !important;
 }
 body:not(.sqs-edit-mode-active) .hide-section {
-  display:none !important;
+  display: none !important;
 }
 
 .wm-accordion-block .fluid-engine {
-  padding:17px;
+  padding: 17px;
 }
 /*If Normal Blocks within a Fluid Section*/
 .fluid-engine .wm-accordion-block .sqs-layout .sqs-block {
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 /*If Fluid Engine Blocks as the Target*/
 /*All FE Image Blocks*/
-.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container img{
-  position:relative !important;
+.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container img {
+  position: relative !important;
 }
 
 .wm-accordion-block .summary-item img {
-  width:100% !important;
+  width: 100% !important;
   height: 100% !important;
   top: 0 !important;
   left: 0 !important;
   object-fit: cover !important;
 }
+
+.accordion-content .sqs-gallery-container .content-fill {
+  position: relative;
+}
+.accordion-content .sqs-gallery-container .content-fill img {
+  position: absolute;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover;
+}
+
 /*Content FILL FE Image Blocks*/
-.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill, .wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill img{
-  position:relative !important;
+.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill,
+.wm-accordion-block .accordion-content-wrapper > .fe-block .fluid-image-container .content-fill img {
+  position: relative !important;
 }
 /*Content FIT FE Image Blocks*/
 .wm-accordion-block .accordion-content-wrapper > .fe-block .sqs-block-image .sqs-image-content {
@@ -215,8 +220,8 @@ body:not(.sqs-edit-mode-active) .hide-section {
 
 /*Accordion in FE, but Blocks from CE*/
 [data-wm-plugin="accordion"][data-source] :not(.fluid-engine) .sqs-block {
-  padding-top:17px;
-  padding-bottom:17px;
+  padding-top: 17px;
+  padding-bottom: 17px;
 }
 
 /*Product Page Container */
@@ -225,21 +230,21 @@ body:not(.sqs-edit-mode-active) .hide-section {
 }
 
 /*Angled Bracket*/
-@supports (d: path('M4 16 l28 26 L60 16')) {
+@supports (d: path("M4 16 l28 26 L60 16")) {
   .wm-accordion-block > .accordion-wrapper > button > .icon.angle path {
-    d: path('M4 16 l28 26 L60 16');
-    transition: d .6s ease-in-out;
+    d: path("M4 16 l28 26 L60 16");
+    transition: d 0.6s ease-in-out;
   }
   .wm-accordion-block.open > .accordion-wrapper > button > .icon.angle path {
-    d: path('M4 42 l28 -26 L60 42');
+    d: path("M4 42 l28 -26 L60 42");
   }
 }
-@supports not (d: path('M4 16 l28 26 L60 16')) {
+@supports not (d: path("M4 16 l28 26 L60 16")) {
   .wm-accordion-block > .accordion-wrapper > button > .icon.angle path {
     transform: rotate(0deg);
     transform-origin: 50% 50%;
-    will-change:transform;
-    transition: transform .5s ease;
+    will-change: transform;
+    transition: transform 0.5s ease;
   }
   .wm-accordion-block.open > .accordion-wrapper > button > .icon.angle path {
     transform: rotate(180deg);
@@ -249,20 +254,20 @@ body:not(.sqs-edit-mode-active) .hide-section {
 /*Plus Icon*/
 .wm-accordion-block > .accordion-wrapper > button > .icon.plus path[data-name="vertical"] {
   transform: rotate(00deg);
-  transform-origin:50% 50%;
-  will-change:transform;
-  transition: transform .6s ease-out;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  transition: transform 0.6s ease-out;
 }
 .wm-accordion-block.open > .accordion-wrapper > button > .icon.plus path[data-name="vertical"] {
-  transform: rotate(90deg)
+  transform: rotate(90deg);
 }
 
 /*Arrow Icon*/
 .wm-accordion-block > .accordion-wrapper > button > .icon.arrow svg {
   transform-origin: 50% 50%;
   transform: rotate(0deg);
-  will-change:transform;
-  transition: transform .5s ease;
+  will-change: transform;
+  transition: transform 0.5s ease;
 }
 .wm-accordion-block.open > .accordion-wrapper > button > .icon.arrow svg {
   transform: rotate(180deg);
@@ -272,33 +277,33 @@ body:not(.sqs-edit-mode-active) .hide-section {
 .wm-accordion-block > .accordion-wrapper > button > .icon.x svg {
   transform-origin: 50% 50%;
   transform: rotate(0deg);
-  will-change:transform;
-  transition: transform .5s ease;
+  will-change: transform;
+  transition: transform 0.5s ease;
 }
 .wm-accordion-block.open > .accordion-wrapper > button > .icon.x svg {
-  transform: rotate(45deg)
+  transform: rotate(45deg);
 }
 
 /*Triangle Icon*/
 .wm-accordion-block > .accordion-wrapper > button > .icon.triangle svg {
   transform-origin: 50% 50%;
   transform: rotate(0deg);
-  will-change:transform;
-  transition: transform .5s ease;
+  will-change: transform;
+  transition: transform 0.5s ease;
 }
 .wm-accordion-block.open > .accordion-wrapper > button > .icon.triangle svg {
-  transform: rotate(90deg)
+  transform: rotate(90deg);
 }
 
 /**
 * Edit Mode Code
 **/
-body.sqs-edit-mode-active [data-wm-plugin="accordion"]{
+body.sqs-edit-mode-active [data-wm-plugin="accordion"] {
   border-bottom: 1px dashed currentColor;
-  position:relative;
+  position: relative;
 }
-body.sqs-edit-mode-active [data-wm-plugin="accordion"]::after{
-  content: 'New Accordion Start';
+body.sqs-edit-mode-active [data-wm-plugin="accordion"]::after {
+  content: "New Accordion Start";
   position: absolute;
   font-size: 10px;
   bottom: -10px;
@@ -306,14 +311,14 @@ body.sqs-edit-mode-active [data-wm-plugin="accordion"]::after{
   text-transform: uppercase;
   letter-spacing: 1px;
   left: 50%;
-  transform:translateX(-50%);
+  transform: translateX(-50%);
   background: black;
   color: white;
   box-sizing: border-box;
   text-align: center;
   opacity: 0;
-  transition: opacity .2s ease;
+  transition: opacity 0.2s ease;
 }
-body.sqs-edit-mode-active .sqs-block:hover [data-wm-plugin="accordion"]::after{
+body.sqs-edit-mode-active .sqs-block:hover [data-wm-plugin="accordion"]::after {
   opacity: 1;
 }
