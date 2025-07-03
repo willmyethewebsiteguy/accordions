@@ -393,7 +393,7 @@
           reference = 'beforeend';
       
       if (location == "product-details") {
-        let detailsContainer = document.querySelector('.ProductItem-details-checkout'),
+        let detailsContainer = document.querySelector('.ProductItem-details-checkout, .product-detail .product-meta'),
             productAccDetails = document.querySelector('.ProductItem-details-accordion');
         if(detailsContainer && !productAccDetails) {
           let container = `<div class="ProductItem-details-accordion"></div>`
@@ -407,8 +407,7 @@
       }
     }
     
-    function Constructor(el, options = {}) {
-      
+    function Constructor(el, options = {}) {      
       this.settings = {
         initEl: el.cloneNode(true),
         container: el,
@@ -487,7 +486,7 @@
           reference = 'beforeend';
       
       if (location == "product-details") {
-        let detailsContainer = document.querySelector('.ProductItem-details-checkout'),
+        let detailsContainer = document.querySelector('.ProductItem-details-checkout, .product-detail .product-meta'),
             productAccDetails = document.querySelector('.ProductItem-details-accordion');
         if(detailsContainer && !productAccDetails) {
           let container = `<div class="ProductItem-details-accordion"></div>`
@@ -639,7 +638,7 @@
           reference = 'beforeend';
       
       if (location == "product-details") {
-        let detailsContainer = document.querySelector('.ProductItem-details-checkout'),
+        let detailsContainer = document.querySelector('.ProductItem-details-checkout, .product-detail .product-meta'),
             productAccDetails = document.querySelector('.ProductItem-details-accordion');
         if(detailsContainer && !productAccDetails) {
           let container = `<div class="ProductItem-details-accordion"></div>`
