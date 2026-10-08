@@ -379,7 +379,7 @@
           nextEl = container.closest('.sqs-block').nextElementSibling,
           j = 1;
       
-      while (!nextEl.querySelector('.wm-accordion-start, [data-accordion-start], .wm-accordion-end, [data-accordion-end]') && j < 50) {
+      while (!nextEl.querySelector('.wm-accordion-start, [data-accordion-start], .wm-accordion-end, [data-accordion-end]') && j < 80) {
         let lockEl = nextEl.nextElementSibling;
         container.append(nextEl)
         nextEl = lockEl;
